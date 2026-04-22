@@ -15,7 +15,15 @@
       "Bash(cp '/c/Users/thefl/OneDrive/바탕 화면/myPoopAI/eslint.config.js' /c/Users/thefl/mypoopai-reorg/)",
       "Bash(cp '/c/Users/thefl/OneDrive/바탕 화면/myPoopAI/index.html' /c/Users/thefl/mypoopai-reorg/)",
       "Bash(cp '/c/Users/thefl/OneDrive/바탕 화면/myPoopAI/package.json' /c/Users/thefl/mypoopai-reorg/)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(mkdir -p /c/Users/thefl/scripts)",
+      "Read(//c/Users/thefl/**)",
+      "Bash(python3 -c \"import json; json.load\\(open\\('/c/Users/thefl/.claude/settings.json'\\)\\); print\\('JSON valid'\\)\")",
+      "Bash(python -c \"import json; json.load\\(open\\('/c/Users/thefl/.claude/settings.json'\\)\\); print\\('JSON valid'\\)\")",
+      "Bash(python:*)",
+      "Bash(cmd.exe:*)",
+      "Bash(git pull:*)"
     ]
   }
 }

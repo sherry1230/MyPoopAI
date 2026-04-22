@@ -31,3 +31,34 @@ dist-ssr
 # Firebase
 .firebase/
 firebase-debug.log
+
+# ===== Cowork 전용 파일 (git에 올리지 않음) =====
+# 이미지 작업 파일
+*.psd
+*.ai
+*.sketch
+*.fig
+*.xd
+이미지작업/
+images-raw/
+assets-raw/
+
+# 암호 / 키 파일
+*.env
+.env*
+*.key
+*.pem
+*.pfx
+password*.txt
+secret*.txt
+credentials*
+*-keys.*
+
+# OS / IDE / 캐시
+.DS_Store
+Thumbs.db
+node_modules/
+.vscode/
+.idea/
+__pycache__/
+*.pyc
