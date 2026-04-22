@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(where gh:*)",
+      "Read(//c/Program Files/**)",
+      "Read(//c/Program Files \\(x86\\)/**)",
+      "Bash(curl:*)",
+      "Bash(printf '{\"name\":\"MyPoopAI\",\"description\":\"AI stool health analysis app\",\"private\":false}')",
+      "Bash(git checkout:*)",
+      "Bash(git remote:*)",
+      "Bash(git push:*)",
+      "Bash(xargs rm:*)",
+      "Bash(cp '/c/Users/thefl/OneDrive/바탕 화면/myPoopAI/.gitignore' /c/Users/thefl/mypoopai-reorg/)",
+      "Bash(cp '/c/Users/thefl/OneDrive/바탕 화면/myPoopAI/README.md' /c/Users/thefl/mypoopai-reorg/)",
+      "Bash(cp '/c/Users/thefl/OneDrive/바탕 화면/myPoopAI/eslint.config.js' /c/Users/thefl/mypoopai-reorg/)",
+      "Bash(cp '/c/Users/thefl/OneDrive/바탕 화면/myPoopAI/index.html' /c/Users/thefl/mypoopai-reorg/)",
+      "Bash(cp '/c/Users/thefl/OneDrive/바탕 화면/myPoopAI/package.json' /c/Users/thefl/mypoopai-reorg/)",
+      "Bash(git add:*)"
+    ]
+  }
+}
