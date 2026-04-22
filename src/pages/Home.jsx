@@ -1,12 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../contexts/AppContext';
+import { useAuth } from '../contexts/AuthContext';
 import { Camera, Baby, TrendingUp, History, ChevronRight } from 'lucide-react';
 import StarRating from '../components/StarRating';
 import theme from '../styles/theme';
 
 export default function Home() {
   const navigate = useNavigate();
-  const { user, mode, history, setMode } = useApp();
+  const { mode, history, setMode } = useApp();
+  const { firebaseUser, isGuest } = useAuth();
   const lastAnalysis = history[0];
 
   // 최근 7일 평균 점수
@@ -40,7 +42,7 @@ export default function Home() {
           color: theme.colors.textLight,
           margin: '4px 0 0',
         }}>
-          안녕하세요, {user?.name || '사용자'}님!
+          안녕하세요, {isGuest ? '게스트' : (firebaseUser?.displayName || firebaseUser?.email?.split('@')[0] || '사용자')}님!
         </p>
       </div>
 

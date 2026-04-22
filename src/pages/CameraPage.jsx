@@ -81,7 +81,8 @@ export default function CameraPage() {
     setAnalyzing(true);
     try {
       const result = await analyzeStool(capturedImage, mode);
-      addAnalysis(result);
+      // addAnalysis에 원본 이미지와 캡처 이미지 전달 (인증 유저면 Storage 업로드)
+      addAnalysis(result, capturedImage, capturedImage);
       navigate('/result', { state: { result } });
     } catch (err) {
       console.error('Analysis error:', err);

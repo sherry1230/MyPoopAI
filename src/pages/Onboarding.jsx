@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useApp } from '../contexts/AppContext';
-import { Shield, Eye, Star, Baby, ArrowRight, Sparkles } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { Shield, Baby, ArrowRight, Sparkles } from 'lucide-react';
+import AuthModal from '../components/AuthModal';
 import theme from '../styles/theme';
 
 const slides = [
@@ -30,12 +31,24 @@ const slides = [
 
 export default function Onboarding() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [showAuth, setShowAuth] = useState(false);
   const navigate = useNavigate();
-  const { login } = useApp();
+  const { continueAsGuest } = useAuth();
 
-  const handleStart = () => {
-    // MVP: 간단 로그인 (이름만 입력)
-    login({ name: '사용자', id: 'demo-user' });
+  const handleGuestStart = async () => {
+    try {
+      await continueAsGuest();
+      localStorage.setItem('mypoopai_onboarding', 'done');
+      navigate('/home');
+    } catch (err) {
+      console.error('게스트 시작 실패:', err);
+    }
+  };
+
+  const handleAuthClose = () => {
+    setShowAuth(false);
+    // 로그인 성공 시 AuthContext가 업데이트되고 App.jsx에서 리다이렉트
+    localStorage.setItem('mypoopai_onboarding', 'done');
     navigate('/home');
   };
 
@@ -64,7 +77,6 @@ export default function Onboarding() {
         maxWidth: '340px',
         gap: '24px',
       }}>
-        {/* 이모지 아이콘 */}
         <div style={{
           width: '120px',
           height: '120px',
@@ -80,29 +92,22 @@ export default function Onboarding() {
         </div>
 
         <h1 style={{
-          fontSize: '24px',
-          fontWeight: '800',
-          color: theme.colors.text,
-          margin: 0,
-          lineHeight: 1.3,
+          fontSize: '24px', fontWeight: '800',
+          color: theme.colors.text, margin: 0, lineHeight: 1.3,
         }}>
           {slide.title}
         </h1>
 
         <p style={{
-          fontSize: '18px',
-          fontWeight: '600',
-          color: theme.colors.primary,
-          margin: 0,
+          fontSize: '18px', fontWeight: '600',
+          color: theme.colors.primary, margin: 0,
         }}>
           {slide.subtitle}
         </p>
 
         <p style={{
-          fontSize: '15px',
-          color: theme.colors.textLight,
-          margin: 0,
-          lineHeight: 1.6,
+          fontSize: '15px', color: theme.colors.textLight,
+          margin: 0, lineHeight: 1.6,
         }}>
           {slide.description}
         </p>
@@ -110,13 +115,9 @@ export default function Onboarding() {
 
       {/* 하단 네비게이션 */}
       <div style={{
-        width: '100%',
-        maxWidth: '340px',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '20px',
-        paddingBottom: '20px',
+        width: '100%', maxWidth: '340px',
+        display: 'flex', flexDirection: 'column',
+        alignItems: 'center', gap: '20px', paddingBottom: '20px',
       }}>
         {/* 인디케이터 */}
         <div style={{ display: 'flex', gap: '8px' }}>
@@ -125,8 +126,7 @@ export default function Onboarding() {
               key={i}
               style={{
                 width: i === currentSlide ? '24px' : '8px',
-                height: '8px',
-                borderRadius: '4px',
+                height: '8px', borderRadius: '4px',
                 background: i === currentSlide ? theme.colors.primary : theme.colors.border,
                 transition: 'all 0.3s',
               }}
@@ -136,39 +136,48 @@ export default function Onboarding() {
 
         {/* 버튼 */}
         {isLast ? (
-          <button
-            onClick={handleStart}
-            style={{
-              width: '100%',
-              padding: '16px',
-              borderRadius: theme.radius.lg,
-              background: `linear-gradient(135deg, ${theme.colors.primary}, ${theme.colors.primaryDark})`,
-              color: theme.colors.white,
-              fontSize: '17px',
-              fontWeight: '700',
-              border: 'none',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px',
-              boxShadow: `0 4px 16px ${theme.colors.primary}50`,
-            }}
-          >
-            시작하기 <ArrowRight size={20} />
-          </button>
+          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <button
+              onClick={handleGuestStart}
+              style={{
+                width: '100%', padding: '16px',
+                borderRadius: theme.radius.lg,
+                background: `linear-gradient(135deg, ${theme.colors.primary}, ${theme.colors.primaryDark})`,
+                color: theme.colors.white,
+                fontSize: '17px', fontWeight: '700',
+                border: 'none', cursor: 'pointer',
+                display: 'flex', alignItems: 'center',
+                justifyContent: 'center', gap: '8px',
+                boxShadow: `0 4px 16px ${theme.colors.primary}50`,
+              }}
+            >
+              게스트로 시작하기 <ArrowRight size={20} />
+            </button>
+            <button
+              onClick={() => setShowAuth(true)}
+              style={{
+                width: '100%', padding: '14px',
+                borderRadius: theme.radius.lg,
+                background: 'transparent',
+                color: theme.colors.primary,
+                fontSize: '15px', fontWeight: '600',
+                border: `1px solid ${theme.colors.primary}`,
+                cursor: 'pointer',
+              }}
+            >
+              로그인 / 회원가입
+            </button>
+          </div>
         ) : (
           <div style={{ display: 'flex', gap: '12px', width: '100%' }}>
             <button
-              onClick={handleStart}
+              onClick={handleGuestStart}
               style={{
-                flex: 1,
-                padding: '16px',
+                flex: 1, padding: '16px',
                 borderRadius: theme.radius.lg,
                 background: 'transparent',
                 color: theme.colors.textMuted,
-                fontSize: '15px',
-                fontWeight: '600',
+                fontSize: '15px', fontWeight: '600',
                 border: `1px solid ${theme.colors.border}`,
                 cursor: 'pointer',
               }}
@@ -178,19 +187,14 @@ export default function Onboarding() {
             <button
               onClick={() => setCurrentSlide(prev => prev + 1)}
               style={{
-                flex: 1,
-                padding: '16px',
+                flex: 1, padding: '16px',
                 borderRadius: theme.radius.lg,
                 background: theme.colors.primary,
                 color: theme.colors.white,
-                fontSize: '15px',
-                fontWeight: '700',
-                border: 'none',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '6px',
+                fontSize: '15px', fontWeight: '700',
+                border: 'none', cursor: 'pointer',
+                display: 'flex', alignItems: 'center',
+                justifyContent: 'center', gap: '6px',
               }}
             >
               다음 <ArrowRight size={18} />
@@ -198,6 +202,8 @@ export default function Onboarding() {
           </div>
         )}
       </div>
+
+      <AuthModal isOpen={showAuth} onClose={handleAuthClose} />
     </div>
   );
 }

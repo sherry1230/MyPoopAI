@@ -23,7 +23,16 @@
       "Bash(python -c \"import json; json.load\\(open\\('/c/Users/thefl/.claude/settings.json'\\)\\); print\\('JSON valid'\\)\")",
       "Bash(python:*)",
       "Bash(cmd.exe:*)",
-      "Bash(git pull:*)"
+      "Bash(git pull:*)",
+      "Bash(git ls-tree:*)",
+      "Bash(npm run:*)",
+      "Bash(npm install:*)",
+      "Bash(nvm list:*)",
+      "Bash(fnm list:*)",
+      "Bash(where node:*)",
+      "Bash(npm -v)",
+      "Bash(nvm install:*)",
+      "Bash(nvm use:*)"
     ]
   }
 }
