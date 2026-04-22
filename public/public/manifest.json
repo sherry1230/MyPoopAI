@@ -1,0 +1,22 @@
+{
+  "name": "My 💩 - AI 건강 분석",
+  "short_name": "My 💩",
+  "description": "AI가 대변 건강을 분석해드려요",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF7F2",
+  "theme_color": "#B8A9C9",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
